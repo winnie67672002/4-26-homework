@@ -1,0 +1,91 @@
+﻿@model Restaurant.Models.TblFoodSearchViewModel
+
+@{
+	ViewData["Title"] = "Search";
+
+}
+
+<h1>@ViewData["Message"]</h1>
+
+<div class = "row">
+	<form asp-action="Search">
+		<div class = "form-group col-sm-5">
+			<label asp-for="SearchParams.Name"class="control-label">名字</a> </label>
+			<input asp-for="SearchParams.Name"class="form-control" />
+		</div>
+		<div class = "form-group col-sm-3">
+			<label asp-for="SearchParams.MinStar"class="control-label">最小星數</a> </label>
+			<input asp-for="SearchParams.MinStar"class="form-control" />
+			<span asp-validation-for="SearchParams.MinStar" class="text-danger"></span>
+		</div>
+		<div class = "form-group col-sm-3">
+			<label asp-for="SearchParams.MaxStar"class="control-label">最大星數</a> </label>
+			<input asp-for="SearchParams.MaxStar"class="form-control" />
+			<span asp-validation-for="SearchParams.MaxStar" class="text-danger"></span>
+		</div>
+		<div class="form-group col-sm-3">
+            <input type="submit" value="搜尋" class="btn btn-primary" />
+	</form>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Foods[0].Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Foods[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Foods[0].Style)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Foods[0].Stars)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Foods[0].Price)
+            <th>
+                @Html.DisplayNameFor(model => model.Foods[0].Comment)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>@*資料*@
+        @*宣告接收 => 小寫 m 的 model
+            接到之後要使用 => 大寫 M 的 Model
+        *@
+@foreach (var item in Model.Foods) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Style)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stars)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            <td>
+                @*<a> 超連結
+                    asp-action => 連結到當前 controller 的哪個 action
+                    asp-route-id => 就是在 routing 最後要放的 id => /controller/action/id
+                    夾在<a></a>中間的是超連結的顯示文字
+                    *@
+                <a asp-action="Edit" asp-route-id="@item.Id">編輯</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">細節</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">刪除</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
