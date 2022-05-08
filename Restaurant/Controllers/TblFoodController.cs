@@ -156,42 +156,40 @@ namespace Restaurant.Controllers
         public IActionResult Search([Bind("Name,MinStar,MaxStar")] TblFoodSearchParams searchParams)
         {
 
-            var viewModel = new TblFoodSearchViewModel(); // 清出記憶體空間 => 打掃房間
+            var viewModel = new TblFoodSearchViewModel(); 
             if (ModelState.IsValid)
             {
-                var searchResult = _context.TblFoods.ToList(); // 取出所有資料
-                if (!string.IsNullOrEmpty(searchParams.Name)) // 如果有輸入名字，就用名字當條件搜尋
+                var searchResult = _context.TblFoods.ToList(); 
+                if (!string.IsNullOrEmpty(searchParams.Name))
                 {
                     searchResult = searchResult
                         .Where(x => x.Name == searchParams.Name)
                         .ToList();
                 }
 
-                // 如果攻擊力的範圍合邏輯，就用加攻擊力條件再多篩一次
+                
                 if (searchParams.MinStar >= 0
                     && searchParams.MaxStar > 0
                     && searchParams.MinStar < searchParams.MaxStar)
                 {
-                    // 最小 ATK = 10；最大 ATK = 20
-                    // ==> 那些英雄攻擊歷介在 10~20 之間
+                   
                     searchResult = searchResult
                         .Where(x => x.Stars >= searchParams.MinStar && x.Stars <= searchParams.MaxStar)
                         .ToList();
                 }
-                else // 如果攻擊力的範圍不合邏輯，就顯示忽略攻擊力條件字樣
+                else
                 {
                     ViewData["Message"] = $"（忽略美食餐廳搜尋條件）";
                 }
 
-                // 用 ViewData 讓 Controller 與 View 共享資料
+                
                 ViewData["Message"] += $"搜尋到 {searchResult.Count} 個好吃餐廳";
 
-                // 把搜尋條件與搜尋結果賦值到 ViewModel 的 property
-                // MVC 才有辦法幫我們把資料打包進 Search.cshtml
+
                 viewModel.SearchParams = searchParams;
                 viewModel.Foods = searchResult;
             }
-            // 回傳 View + ViewModel 進行打包作業
+            
             return View(viewModel);
         }
 

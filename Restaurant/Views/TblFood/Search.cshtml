@@ -7,28 +7,36 @@
 
 <h1>@ViewData["Message"]</h1>
 
-<div class = "row">
-	<form asp-action="Search">
-		<div class = "form-group col-sm-5">
-			<label asp-for="SearchParams.Name"class="control-label">名字</a> </label>
+<form asp-action="Search">
+    <div class = "row">
+    
+		<div class = "form-group col-sm-3">
+			<label asp-for="SearchParams.Name"class="control-label text-success">名字 </label>
 			<input asp-for="SearchParams.Name"class="form-control" />
 		</div>
 		<div class = "form-group col-sm-3">
-			<label asp-for="SearchParams.MinStar"class="control-label">最小星數</a> </label>
+			<label asp-for="SearchParams.MinStar"class="control-label text-success">最小星數</label>
 			<input asp-for="SearchParams.MinStar"class="form-control" />
 			<span asp-validation-for="SearchParams.MinStar" class="text-danger"></span>
 		</div>
 		<div class = "form-group col-sm-3">
-			<label asp-for="SearchParams.MaxStar"class="control-label">最大星數</a> </label>
+			<label asp-for="SearchParams.MaxStar"class="control-label text-success">最大星數</label>
 			<input asp-for="SearchParams.MaxStar"class="form-control" />
 			<span asp-validation-for="SearchParams.MaxStar" class="text-danger"></span>
 		</div>
+    
 		<div class="form-group col-sm-3">
-            <input type="submit" value="搜尋" class="btn btn-primary" />
-	</form>
-</div>
+            <input type="submit" value="搜尋" class="btn btn-primary text-white-50" />
+	    </div>
+   
+    </div>
+ </form>
+ <br>
 
-<table class="table">
+
+
+
+<table class="table text-muted border border-success">
     <thead>
         <tr>
             <th>
